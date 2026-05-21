@@ -79,14 +79,16 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             <div className="relative">
               {/* Backglow for typography */}
               <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 to-purple-500/35 rounded-full blur-[80px] opacity-20" />
-              <motion.span 
-                className="text-8xl sm:text-9xl md:text-[12rem] font-sans font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-slate-100 to-slate-400 flex select-none"
-              >
-                {progress.toString().padStart(3, '0')}
-                <span className="text-2xl sm:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500 flex items-end mb-4 md:mb-8 font-mono ml-1">
+              <div className="flex items-baseline justify-center select-none">
+                <motion.span 
+                  className="text-8xl sm:text-9xl md:text-[12rem] font-sans font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-slate-100 to-slate-400"
+                >
+                  {progress.toString().padStart(3, '0')}
+                </motion.span>
+                <span className="inline-block text-4xl sm:text-5xl md:text-6xl font-sans font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500 ml-2 px-1">
                   %
                 </span>
-              </motion.span>
+              </div>
             </div>
 
             <div className="h-6 overflow-hidden flex items-center justify-center mt-4">
