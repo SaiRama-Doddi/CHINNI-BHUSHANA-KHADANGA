@@ -805,25 +805,168 @@ export default function App() {
               </div>
             </section>
 
-            {/* FOOTER */}
-            <footer className="border-t border-white/10 bg-[#020617] py-12 px-4 md:px-8 max-w-7xl mx-auto text-slate-500 text-xs font-mono select-none">
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
-                <div className="flex items-center gap-2.5">
-                  <div className="h-6 w-6 bg-white/5 rounded-md border border-white/10 flex items-center justify-center text-blue-400">
-                    <Terminal className="w-3.5 h-3.5" />
-                  </div>
-                  <span>CRAFTED IN 2026 / AKASH KHADANGA ECOSYSTEM SPEC</span>
-                </div>
+            {/* PREMIUM MULTI-SECTION FOOTER */}
+            <footer className="w-full border-t border-white/10 bg-[#020617] mt-16 relative z-10">
+              <div className="max-w-7xl mx-auto pt-16 pb-12 px-4 md:px-8 text-slate-500 text-xs font-mono select-none">
                 
-                <div className="flex gap-6 text-slate-400">
-                  <a href="mailto:akashkhadaanga123@gmail.com" className="hover:text-blue-400 transition-colors">EMAIL</a>
-                  <a href="https://github.com/AkashKhadanga/issue-resolve-hub" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors">GITHUB</a>
-                  <a href="https://www.linkedin.com/in/chinni-bhushana-khadanga-44a748312/" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors">LINKEDIN</a>
+                {/* Main Footer Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/5 mb-10">
+                  
+                  {/* Brand & Ecosystem Summary */}
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2.5">
+                      <div className="h-8 w-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">
+                        <span className="text-[10px] font-semibold tracking-widest uppercase">AK</span>
+                      </div>
+                      <div className="leading-none">
+                        <span className="text-xs font-sans font-bold text-white tracking-tight block">Akash Khadanga</span>
+                        <span className="text-[8px] text-blue-400 block tracking-widest mt-0.5">DEV_ECOSYSTEM</span>
+                      </div>
+                    </div>
+                    <p className="text-[11px] leading-relaxed text-slate-400 font-sans font-medium">
+                      Constructing high-performance digital architectures, linking Django REST API server engines, SQLite data schemas, and immersive React client frontends into cohesive systems.
+                    </p>
+                    <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-white/[0.02] border border-white/5 rounded-full text-[9px] text-slate-400">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span>NODE_STATUS: ACTIVE // PING &lt; 15ms</span>
+                    </div>
+                  </div>
+
+                  {/* Navigation Links */}
+                  <div className="space-y-3">
+                    <h4 className="text-[10px] uppercase font-bold text-slate-300 tracking-wider">// Ecosystem Nav</h4>
+                    <ul className="space-y-2 text-[11px] font-sans font-semibold">
+                      <li>
+                        <button 
+                          onClick={() => scrollToSection('about')} 
+                          className="text-slate-400 hover:text-blue-400 transition-colors cursor-pointer text-left uppercase flex items-center gap-1.5 group"
+                        >
+                          <span className="h-1 w-1 rounded-full bg-slate-700 group-hover:bg-blue-400 transition-colors" />
+                          About Ecosystem
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          onClick={() => scrollToSection('skills')} 
+                          className="text-slate-400 hover:text-blue-400 transition-colors cursor-pointer text-left uppercase flex items-center gap-1.5 group"
+                        >
+                          <span className="h-1 w-1 rounded-full bg-slate-700 group-hover:bg-blue-400 transition-colors" />
+                          Skills Grid
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          onClick={() => scrollToSection('projects')} 
+                          className="text-slate-400 hover:text-blue-400 transition-colors cursor-pointer text-left uppercase flex items-center gap-1.5 group"
+                        >
+                          <span className="h-1 w-1 rounded-full bg-slate-700 group-hover:bg-blue-400 transition-colors" />
+                          Case Studies
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          onClick={() => scrollToSection('awards')} 
+                          className="text-slate-400 hover:text-blue-400 transition-colors cursor-pointer text-left uppercase flex items-center gap-1.5 group"
+                        >
+                          <span className="h-1 w-1 rounded-full bg-slate-700 group-hover:bg-blue-400 transition-colors" />
+                          Timeline & Awards
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          onClick={() => scrollToSection('contact')} 
+                          className="text-slate-400 hover:text-blue-400 transition-colors cursor-pointer text-left uppercase flex items-center gap-1.5 group"
+                        >
+                          <span className="h-1 w-1 rounded-full bg-slate-700 group-hover:bg-blue-400 transition-colors" />
+                          Contact Panel
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Highlight Projects */}
+                  <div className="space-y-3">
+                    <h4 className="text-[10px] uppercase font-bold text-slate-300 tracking-wider">// Highlight Projects</h4>
+                    <ul className="space-y-2.5 text-[11px] font-sans">
+                      <li>
+                        <a 
+                          href="https://issue-resolve-hub.vercel.app/admin" 
+                          target="_blank" 
+                          rel="noreferrer" 
+                          className="text-slate-400 hover:text-blue-400 transition-colors block group"
+                        >
+                          <span className="font-bold block text-slate-300 group-hover:text-blue-400 transition-colors">SMART GRIEVANCE HUB</span>
+                          <span className="text-[9px] text-slate-500 block">Real-time Complaint System</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a 
+                          href="https://github.com/AkashKhadanga/issue-resolve-hub" 
+                          target="_blank" 
+                          rel="noreferrer" 
+                          className="text-slate-400 hover:text-blue-400 transition-colors block group"
+                        >
+                          <span className="font-bold block text-slate-300 group-hover:text-blue-400 transition-colors">STUDENT TASK PLANNER</span>
+                          <span className="text-[9px] text-slate-500 block">Django REST API + React.js Client</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Connect Channels */}
+                  <div className="space-y-3">
+                    <h4 className="text-[10px] uppercase font-bold text-slate-300 tracking-wider">// Connect Network</h4>
+                    <ul className="space-y-2 text-[11px] font-sans font-semibold">
+                      <li>
+                        <a href="mailto:akashkhadaanga123@gmail.com" className="text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2">
+                          <Mail className="w-3.5 h-3.5 text-blue-400" />
+                          <span>akashkhadaanga123@gmail.com</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="tel:+917207174517" className="text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2">
+                          <Phone className="w-3.5 h-3.5 text-blue-400" />
+                          <span>+91-7207174517</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="https://github.com/AkashKhadanga" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2">
+                          <Github className="w-3.5 h-3.5 text-blue-400" />
+                          <span>github.com/AkashKhadanga</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="https://www.linkedin.com/in/chinni-bhushana-khadanga-44a748312/" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-blue-400 transition-colors flex items-center gap-2">
+                          <Linkedin className="w-3.5 h-3.5 text-blue-400" />
+                          <span>linkedin.com/in/chinni-bhushana</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
                 </div>
 
-                <div>
-                  <span className="text-[10px] text-slate-600">SYS_MAINNET_ONLINE</span>
+                {/* Bottom Row */}
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-4">
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-6 w-6 bg-white/5 rounded-md border border-white/10 flex items-center justify-center text-blue-400">
+                      <Terminal className="w-3.5 h-3.5" />
+                    </div>
+                    <span>CRAFTED IN 2026 / AKASH KHADANGA ECOSYSTEM SPEC</span>
+                  </div>
+                  
+                  <div className="flex gap-6 text-slate-400">
+                    <a href="mailto:akashkhadaanga123@gmail.com" className="hover:text-blue-400 transition-colors">EMAIL</a>
+                    <a href="https://github.com/AkashKhadanga/issue-resolve-hub" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors">GITHUB</a>
+                    <a href="https://www.linkedin.com/in/chinni-bhushana-khadanga-44a748312/" target="_blank" rel="noreferrer" className="hover:text-blue-400 transition-colors">LINKEDIN</a>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span className="text-[10px] text-slate-600">SYS_MAINNET_ONLINE</span>
+                  </div>
                 </div>
+
               </div>
             </footer>
 
