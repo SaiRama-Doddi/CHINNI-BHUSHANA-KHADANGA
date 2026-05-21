@@ -14,7 +14,7 @@ export default function AiChatbot() {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement | null>(null);
+  const viewportRef = useRef<HTMLDivElement | null>(null);
 
   // Suggested Quick Chips questions for recruiters
   const quickQuestions = [
@@ -77,7 +77,12 @@ export default function AiChatbot() {
   };
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (viewportRef.current) {
+      viewportRef.current.scrollTo({
+        top: viewportRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
   }, [messages, isLoading]);
 
   return (
@@ -138,7 +143,10 @@ export default function AiChatbot() {
             </div>
 
             {/* Message Pane */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-[#020206]/40 relative">
+            <div 
+              ref={viewportRef}
+              className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar bg-[#020206]/40 relative"
+            >
               {messages.map((m, idx) => {
                 const isModel = m.role === 'model';
                 return (
@@ -177,7 +185,6 @@ export default function AiChatbot() {
                   </div>
                 </div>
               )}
-              <div ref={chatEndRef} />
             </div>
 
             {/* Quick suggested chips track (only visible when not loading) */}

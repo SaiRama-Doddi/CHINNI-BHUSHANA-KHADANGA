@@ -13,7 +13,7 @@ export default function ContactAiChatbot() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const chatEndRef = useRef<HTMLDivElement | null>(null);
+  const viewportRef = useRef<HTMLDivElement | null>(null);
 
   // Suggested questions optimized for recruiter workflows
   const recommendationChips = [
@@ -77,7 +77,12 @@ export default function ContactAiChatbot() {
   };
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (viewportRef.current) {
+      viewportRef.current.scrollTo({
+        top: viewportRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   }, [messages, isLoading]);
 
   // Clean custom formatter for basic markdown output (bolding, lists, linebreaks)
@@ -143,7 +148,10 @@ export default function ContactAiChatbot() {
       </div>
 
       {/* Messages viewport */}
-      <div className="flex-1 overflow-y-auto pr-1 space-y-4 max-h-[290px] min-h-[200px] scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+      <div 
+        ref={viewportRef}
+        className="flex-1 overflow-y-auto pr-1 space-y-4 max-h-[290px] min-h-[200px] scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent"
+      >
         <AnimatePresence initial={false}>
           {messages.map((m, idx) => {
             const isModel = m.role === 'model';
@@ -194,7 +202,6 @@ export default function ContactAiChatbot() {
             </div>
           </motion.div>
         )}
-        <div ref={chatEndRef} />
       </div>
 
       {/* Suggested Quick Chips */}

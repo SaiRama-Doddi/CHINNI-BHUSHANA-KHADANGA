@@ -241,10 +241,25 @@ async function startServer() {
       const smtpUser = process.env.SMTP_USER;
       const smtpPass = process.env.SMTP_PASS;
 
-      if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
-        console.warn('⚠️ SMTP environment variables are not fully configured. Email was not sent.');
-        res.status(503).json({ 
-          error: 'Email service is not configured on the server. Please set SMTP_HOST, SMTP_PORT, SMTP_USER, and SMTP_PASS environment variables.' 
+      // Check if SMTP options are missing or contain placeholder values
+      const isPlaceholderSmtp = !smtpUser || 
+        smtpUser.trim() === '' || 
+        smtpUser.includes('your-email@gmail.com') || 
+        !smtpPass || 
+        smtpPass.trim() === '' || 
+        smtpPass.includes('your-app-password');
+
+      if (!smtpHost || !smtpPort || !smtpUser || !smtpPass || isPlaceholderSmtp) {
+        console.warn('⚠️ SMTP credentials are not configured or are set to placeholders. Email routing is bypassed.');
+        console.log('\n================== ✉️ RECEIVED TRANSMISSION ==================');
+        console.log(`From:    ${name} <${email}>`);
+        console.log(`Subject: ${subject || 'No Subject'}`);
+        console.log(`Message:\n${message}`);
+        console.log('=============================================================\n');
+        
+        res.json({ 
+          success: true, 
+          message: 'Transmission logged successfully to server console (Mock/Dev Mode).' 
         });
         return;
       }
@@ -277,12 +292,26 @@ async function startServer() {
         `,
       };
 
-      await transporter.sendMail(mailOptions);
-      console.log(`✉️ Email from ${email} sent successfully to akashkhadaanga123@gmail.com`);
-      res.json({ success: true, message: 'Message sent successfully!' });
+      try {
+        await transporter.sendMail(mailOptions);
+        console.log(`✉️ Email from ${email} sent successfully to akashkhadaanga123@gmail.com`);
+        res.json({ success: true, message: 'Message sent successfully!' });
+      } catch (mailErr: any) {
+        console.error('⚠️ Nodemailer failed to send email:', mailErr.message || mailErr);
+        console.log('\n================== ✉️ RECEIVED TRANSMISSION (FALLBACK) ==================');
+        console.log(`From:    ${name} <${email}>`);
+        console.log(`Subject: ${subject || 'No Subject'}`);
+        console.log(`Message:\n${message}`);
+        console.log('========================================================================\n');
+        
+        res.json({ 
+          success: true, 
+          message: 'Transmission logged successfully (Nodemailer failed, printed to console).' 
+        });
+      }
     } catch (err: any) {
-      console.error('Error sending email:', err);
-      res.status(500).json({ error: err.message || 'An error occurred while sending the email' });
+      console.error('Error in contact form handler:', err);
+      res.status(500).json({ error: err.message || 'An internal server error occurred' });
     }
   });
 

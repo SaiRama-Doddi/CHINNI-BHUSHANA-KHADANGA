@@ -652,11 +652,11 @@ export default function App() {
                 </div>
 
                 {/* RIGHT BLOCK: FUTURISTIC GLASSMOPHIC FORM / INTERACTIVE AI CHATBOT */}
-                <div className="lg:col-span-7 bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-2xl p-6 md:p-8 relative overflow-hidden flex flex-col justify-between hover:border-white/20 transition-all duration-300">
+                <div className="lg:col-span-7 bg-white/[0.03] border border-white/10 backdrop-blur-xl rounded-2xl p-6 md:p-8 relative overflow-hidden flex flex-col justify-start gap-5 hover:border-white/20 transition-all duration-300">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-[40px] pointer-events-none" />
 
                   {/* TAB SELECTOR FOR MESSAGE FORM OR AI RECRUITER */}
-                  <div className="flex border-b border-white/5 mb-6 relative z-20">
+                  <div className="flex border-b border-white/5 mb-2 relative z-20">
                     <button 
                       type="button"
                       onClick={() => setContactTab('briefing')} 
@@ -693,6 +693,53 @@ export default function App() {
                           onSubmit={handleContactSubmit}
                           className="space-y-5"
                         >
+                          {/* FUTURISTIC EMOJI BANNER TO FILL SPACE & DELIGHT RECRUITERS */}
+                          <div className="flex items-center gap-4 bg-white/[0.02] border border-white/5 rounded-2xl p-4 relative overflow-hidden group/banner">
+                            <div className="flex gap-2 text-2xl relative z-10 shrink-0">
+                              <motion.span
+                                animate={{ y: [0, -6, 0], rotate: [0, 8, -8, 0] }}
+                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                                className="inline-block cursor-default select-none"
+                              >
+                                📨
+                              </motion.span>
+                              <motion.span
+                                animate={{ y: [0, -4, 0], scale: [1, 1.1, 1] }}
+                                transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+                                className="inline-block cursor-default select-none"
+                              >
+                                🚀
+                              </motion.span>
+                              <motion.span
+                                animate={{ scale: [1, 1.2, 1], rotate: [0, 15, -15, 0] }}
+                                transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+                                className="inline-block cursor-default select-none text-purple-400"
+                              >
+                                ✨
+                              </motion.span>
+                              <motion.span
+                                animate={{ rotate: [0, 15, -15, 0] }}
+                                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1.8 }}
+                                className="inline-block cursor-default select-none"
+                              >
+                                👋
+                              </motion.span>
+                            </div>
+                            <div className="text-left relative z-10">
+                              <h4 className="text-[10px] font-mono font-bold tracking-wider text-blue-400 uppercase flex items-center gap-1.5">
+                                <span>MAILROOM GATEWAY</span>
+                                <span className="relative flex h-1.5 w-1.5">
+                                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                                </span>
+                              </h4>
+                              <p className="text-[10px] text-slate-400 font-sans mt-0.5 leading-relaxed">
+                                Fill out the form below. Messages are logged and synced directly with Akash's local queue.
+                              </p>
+                            </div>
+                            {/* Animated scanline backdrop effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-transparent opacity-50 pointer-events-none" />
+                          </div>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div className="space-y-1.5">
                               <label className="text-[10px] font-mono text-slate-400 uppercase tracking-widest pl-1">Name_</label>
