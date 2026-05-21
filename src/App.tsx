@@ -552,12 +552,12 @@ export default function App() {
             {/* ===================================
                  CONTACT SECTION
                =================================== */}
-            <section id="contact" className="py-24 md:py-32 px-4 md:px-8 max-w-7xl mx-auto border-t border-white/10 relative z-10">
+            <section id="contact" className="pt-24 md:pt-32 pb-8 md:pb-12 px-4 md:px-8 max-w-7xl mx-auto border-t border-white/10 relative z-10">
               
               <div className="absolute top-20 right-0 w-80 h-80 bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
               <div className="absolute bottom-20 left-0 w-80 h-80 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
                 
                 {/* LEFT BLOCK: INFO DETAIL CARDS */}
                 <div className="lg:col-span-5 flex flex-col justify-between gap-6">
@@ -882,7 +882,7 @@ export default function App() {
             </section>
 
             {/* PREMIUM MULTI-SECTION FOOTER */}
-            <footer className="w-full border-t border-white/10 bg-[#020617] mt-16 relative z-10">
+            <footer className="w-full border-t border-white/10 bg-[#020617] mt-0 relative z-10">
               <div className="max-w-7xl mx-auto pt-16 pb-12 px-4 md:px-8 text-slate-500 text-xs font-mono select-none">
                 
                 {/* Main Footer Grid */}

@@ -78,10 +78,30 @@ export default function AiChatbot() {
 
   useEffect(() => {
     if (viewportRef.current) {
+      // Save current scroll position to lock window scroll during update scroll
+      const scrollY = window.scrollY;
+
       viewportRef.current.scrollTo({
         top: viewportRef.current.scrollHeight,
         behavior: 'smooth',
       });
+
+      // Temporary scroll locking listener to absorb browser-forced focus/scrolling jumps
+      const preventWindowScroll = () => {
+        if (window.scrollY !== scrollY) {
+          window.scrollTo(0, scrollY);
+        }
+      };
+
+      window.addEventListener('scroll', preventWindowScroll, { passive: true });
+      const timer = setTimeout(() => {
+        window.removeEventListener('scroll', preventWindowScroll);
+      }, 500);
+
+      return () => {
+        window.removeEventListener('scroll', preventWindowScroll);
+        clearTimeout(timer);
+      };
     }
   }, [messages, isLoading]);
 
@@ -92,6 +112,7 @@ export default function AiChatbot() {
         {!isOpen && (
           <motion.button
             key="chat-trigger"
+            type="button"
             initial={{ scale: 0, rotate: -45 }}
             animate={{ scale: 1, rotate: 0 }}
             exit={{ scale: 0, rotate: 45 }}
@@ -135,6 +156,7 @@ export default function AiChatbot() {
                 </div>
               </div>
               <button
+                type="button"
                 onClick={() => setIsOpen(false)}
                 className="p-1.5 hover:bg-slate-900 rounded-lg text-slate-400 hover:text-white transition-colors cursor-pointer"
               >
@@ -193,6 +215,7 @@ export default function AiChatbot() {
                 {quickQuestions.map((q) => (
                   <button
                     key={q.text}
+                    type="button"
                     onClick={() => handleSendMessage(q.query)}
                     className="text-[10px] font-mono px-3 py-1 bg-slate-950 hover:bg-slate-900 border border-slate-900 hover:border-slate-800 text-slate-400 hover:text-white rounded-full flex items-center gap-1 cursor-pointer transition-colors active:scale-95"
                   >

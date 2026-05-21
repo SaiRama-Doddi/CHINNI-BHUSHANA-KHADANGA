@@ -78,10 +78,30 @@ export default function ContactAiChatbot() {
 
   useEffect(() => {
     if (viewportRef.current) {
+      // Save current scroll position to lock window scroll during update scroll
+      const scrollY = window.scrollY;
+      
       viewportRef.current.scrollTo({
         top: viewportRef.current.scrollHeight,
         behavior: 'smooth'
       });
+
+      // Temporary scroll locking listener to absorb browser-forced focus/scrolling jumps
+      const preventWindowScroll = () => {
+        if (window.scrollY !== scrollY) {
+          window.scrollTo(0, scrollY);
+        }
+      };
+
+      window.addEventListener('scroll', preventWindowScroll, { passive: true });
+      const timer = setTimeout(() => {
+        window.removeEventListener('scroll', preventWindowScroll);
+      }, 500);
+
+      return () => {
+        window.removeEventListener('scroll', preventWindowScroll);
+        clearTimeout(timer);
+      };
     }
   }, [messages, isLoading]);
 
@@ -139,6 +159,7 @@ export default function ContactAiChatbot() {
           <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest">// SECURE INTERACTION PORT LINKED</span>
         </div>
         <button 
+          type="button"
           onClick={handleReset}
           title="Reset neural session"
           className="text-slate-500 hover:text-white hover:bg-white/5 p-1 rounded transition-colors cursor-pointer"
@@ -210,6 +231,7 @@ export default function ContactAiChatbot() {
           {recommendationChips.map((chip, idx) => (
             <button
               key={idx}
+              type="button"
               onClick={() => handleSendMessage(chip.query)}
               className="text-[9px] font-mono px-2.5 py-1 bg-white/[0.02] hover:bg-white/[0.05] border border-white/5 hover:border-white/10 text-slate-400 hover:text-white rounded-full flex items-center gap-1 shrink-0 cursor-pointer transition-all duration-200"
             >
