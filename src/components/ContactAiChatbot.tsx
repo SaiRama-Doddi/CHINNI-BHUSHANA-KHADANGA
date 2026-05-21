@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Send, User, ChevronRight, Loader2, RefreshCw } from 'lucide-react';
 import { ChatMessage } from '../types';
+import { getClientMockResponse } from '../utils/chatbotFallback';
 
 export default function ContactAiChatbot() {
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -51,23 +52,32 @@ export default function ContactAiChatbot() {
         throw new Error('Neural proxy failed');
       }
 
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Response is not JSON');
+      }
+
       const data = await response.json();
+      if (!data || typeof data.text !== 'string') {
+        throw new Error('Invalid JSON structure');
+      }
 
       setMessages((prev) => [
         ...prev,
         {
           role: 'model',
-          content: data.text || "Apologies! Akash's AI partner suffered a neural disconnect. Akash is highly skilled in React.js, Python Django, and NoSQL. Connect with him at akashkhadaanga123@gmail.com!",
+          content: data.text,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
     } catch (err) {
-      console.error('Error fetching chat:', err);
+      console.error('Error fetching chat, using client fallback:', err);
+      const fallbackText = getClientMockResponse(textToSend);
       setMessages((prev) => [
         ...prev,
         {
           role: 'model',
-          content: "I'm having trouble retrieving Akash's live database indices, but let me summarize: Akash is an expert in React.js, Python Django frameworks, and Firestore databases. You can reach him directly at akashkhadaanga123@gmail.com or via phone at +91-7207174517!",
+          content: fallbackText,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);

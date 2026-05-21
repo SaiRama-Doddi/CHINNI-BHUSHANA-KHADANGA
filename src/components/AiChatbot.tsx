@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, MessageSquare, X, Send, User, ChevronRight, HelpCircle, Loader } from 'lucide-react';
 import { ChatMessage } from '../types';
+import { getClientMockResponse } from '../utils/chatbotFallback';
 
 export default function AiChatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,23 +52,32 @@ export default function AiChatbot() {
         throw new Error('API server failed');
       }
 
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Response is not JSON');
+      }
+
       const data = await response.json();
+      if (!data || typeof data.text !== 'string') {
+        throw new Error('Invalid JSON structure');
+      }
       
       setMessages((prev) => [
         ...prev,
         {
           role: 'model',
-          content: data.text || "I apologize, but I couldn't reach Akash's profile server right now. He is highly proficient in full-stack Python architectures, React frameworks, and Firebase setups!",
+          content: data.text,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
     } catch (err) {
-      console.error(err);
+      console.error('Chatbot API error, using client-side fallback:', err);
+      const fallbackText = getClientMockResponse(textToSend);
       setMessages((prev) => [
         ...prev,
         {
           role: 'model',
-          content: "I am having trouble synchronizing with the profile database. Alternatively, Akash is expert in React components, Python Django framework, and NoSQL databases. Feel free to contact him at akashkhadaanga123@gmail.com!",
+          content: fallbackText,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         },
       ]);
