@@ -152,7 +152,7 @@ export default function AiChatbot() {
                     Akash AI Partner
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   </h4>
-                  <p className="text-[10px] text-slate-500 font-mono">MODEL: GEMINI-3.5-FLASH</p>
+                  <p className="text-[10px] text-slate-500 font-mono">MODEL: GEMINI-2.5-FLASH</p>
                 </div>
               </div>
               <button

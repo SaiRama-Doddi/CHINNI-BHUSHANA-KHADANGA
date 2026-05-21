@@ -150,15 +150,16 @@ async function startServer() {
 
   // API router FIRST
   app.post('/api/gemini/chat', async (req, res) => {
+    let modelPrompt = '';
     try {
-      const { messages } = req.body;
+      const { messages } = req.body || {};
       if (!messages || !Array.isArray(messages)) {
         res.status(400).json({ error: 'Messages array is required' });
         return;
       }
 
       const lastMessage = messages[messages.length - 1];
-      const modelPrompt = lastMessage ? lastMessage.content : '';
+      modelPrompt = lastMessage ? lastMessage.content : '';
 
       // If no API key, return mock helpful recruiter responses so it doesn't crash
       if (!ai) {
@@ -208,7 +209,7 @@ async function startServer() {
       try {
         // Call generateContent with system instruction
         const response = await ai.models.generateContent({
-          model: 'gemini-3.5-flash',
+          model: 'gemini-2.5-flash',
           contents: modelPrompt,
           config: {
             systemInstruction: systemInstruction,
@@ -224,7 +225,13 @@ async function startServer() {
       res.json({ text: responseText });
     } catch (err: any) {
       console.error('Error on Gemini proxy call:', err);
-      res.status(500).json({ error: err.message || 'An internal Server Error occurred' });
+      try {
+        const mockText = getMockResponse(modelPrompt);
+        res.json({ text: mockText });
+      } catch (mockErr: any) {
+        console.error('Error serving fallback mock response:', mockErr);
+        res.status(500).json({ error: err.message || 'An internal Server Error occurred' });
+      }
     }
   });
 
