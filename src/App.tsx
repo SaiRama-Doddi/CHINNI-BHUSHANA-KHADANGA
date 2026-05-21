@@ -16,6 +16,7 @@ import AiChatbot from './components/AiChatbot';
 import MouseTrail from './components/MouseTrail';
 import ContactAiChatbot from './components/ContactAiChatbot';
 import { Project } from './types';
+import resumePdf from './assets/CBK resume  3.pdf';
 
 export default function App() {
   const [loadingComplete, setLoadingComplete] = useState(false);
@@ -161,9 +162,17 @@ export default function App() {
 
                 {/* Desktop CTA actions */}
                 <div className="hidden md:flex items-center gap-3">
+                  <a 
+                    href={resumePdf}
+                    download="Akash_Khadanga_Resume.pdf"
+                    className="px-4 py-2 bg-white/5 border border-white/10 hover:bg-white/10 text-white text-[10px] font-mono font-bold uppercase tracking-wider rounded-full transition-all flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <span>Resume</span>
+                    <Download className="w-3 h-3 text-blue-400" />
+                  </a>
                   <button 
                     onClick={() => scrollToSection('contact')}
-                    className="px-6 py-2 bg-white text-black text-xs font-bold uppercase tracking-widest rounded-full hover:bg-blue-400 hover:text-white transition-all cursor-pointer"
+                    className="px-5 py-2 bg-white text-black text-[10px] font-mono font-bold uppercase tracking-wider rounded-full hover:bg-blue-400 hover:text-white transition-all cursor-pointer"
                   >
                     Contact
                   </button>
@@ -193,6 +202,14 @@ export default function App() {
                       <button onClick={() => scrollToSection('projects')} className="text-left py-2 hover:text-blue-400 transition-colors">PROJECTS</button>
                       <button onClick={() => scrollToSection('awards')} className="text-left py-2 hover:text-blue-400 transition-colors">TIMELINE</button>
                       <button onClick={() => scrollToSection('contact')} className="text-left py-2 hover:text-blue-400 transition-colors">CONTACT</button>
+                      <a 
+                        href={resumePdf}
+                        download="Akash_Khadanga_Resume.pdf"
+                        className="text-left py-2 hover:text-blue-400 transition-colors flex items-center gap-2"
+                      >
+                        <span>DOWNLOAD RESUME</span>
+                        <Download className="w-3.5 h-3.5 text-blue-400" />
+                      </a>
                     </nav>
                     <div className="pt-4 border-t border-white/5 flex justify-between items-center">
                       <a href="mailto:akashkhadaanga123@gmail.com" className="text-xs font-mono text-blue-400 underline hover:text-purple-400 transition-colors">akashkhadaanga123@gmail.com</a>
@@ -211,89 +228,197 @@ export default function App() {
               <div className="absolute top-[20%] left-[-10%] w-[50%] h-[35%] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
               <div className="absolute top-[40%] right-[-10%] w-[40%] h-[40%] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none" />
 
-              <div className="space-y-8 max-w-4xl relative">
+              {/* Asymmetric layout grid for hero details & futuristic status panel */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full relative">
                 
-                {/* Visual tech indicator badge */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"
-                >
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                  <span className="text-[10px] uppercase tracking-widest font-semibold text-slate-300 uppercase">Available for collaboration & Placement</span>
-                </motion.div>
-
-                {/* Big Display Headings */}
-                <div className="space-y-4">
-                  <motion.h1 
-                    initial={{ opacity: 0, y: 25 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-5xl sm:text-7xl md:text-8xl font-sans font-black tracking-tight text-white leading-[1.05]"
-                  >
-                    Crafting Scalable <br className="hidden sm:inline" />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400">Digital Experiences</span>
-                  </motion.h1>
-
-                  {/* Subheading + Typing interaction simulation */}
+                {/* Left Side: Dynamic Copy and CTAs */}
+                <div className="lg:col-span-7 space-y-8 text-left">
+                  
+                  {/* Visual tech indicator badge */}
                   <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.8 }}
-                    className="flex flex-col sm:flex-row items-start sm:items-center gap-2 pt-2 text-base md:text-lg font-mono"
+                    transition={{ delay: 0.2, duration: 0.6 }}
+                    className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-950/80 border border-emerald-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(16,185,129,0.1)] relative"
                   >
-                    <span className="text-slate-400 font-sans font-medium max-w-xl text-left leading-relaxed">
-                      Full Stack Developer building modern, scalable, real-time web applications with premium user experiences. Specialized in:
-                    </span>
-                    <AnimatePresence mode="wait">
-                      <motion.span 
-                        key={typedWord}
-                        initial={{ opacity: 0, x: -5 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 5 }}
-                        transition={{ duration: 0.2 }}
-                        className="text-blue-400 font-bold bg-white/5 border border-white/10 px-3 py-1 rounded-full text-xs tracking-wide shrink-0 backdrop-blur-md"
-                      >
-                        {typedWord}
-                      </motion.span>
-                    </AnimatePresence>
+                    <div className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </div>
+                    <span className="text-[10px] font-mono tracking-widest text-slate-300 uppercase">Available for collaboration & Placement</span>
+                  </motion.div>
+
+                  {/* Big Display Headings */}
+                  <div className="space-y-4">
+                    <motion.h1 
+                      initial={{ opacity: 0, y: 25 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      className="text-4xl sm:text-6xl md:text-7xl font-sans font-black tracking-tight text-white leading-[1.1]"
+                    >
+                      Crafting High-Performance <br className="hidden sm:inline" />
+                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400">
+                        Full-Stack Systems
+                      </span>
+                    </motion.h1>
+
+                    {/* Interactive Ticker styled as terminal line */}
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4, duration: 0.8 }}
+                      className="flex flex-wrap items-center gap-2 pt-2 text-xs md:text-sm font-mono text-slate-400"
+                    >
+                      <div className="flex items-center gap-2.5 bg-slate-900/60 border border-white/5 rounded-xl px-4 py-2.5 backdrop-blur-md">
+                        <span className="text-blue-400 font-bold">$</span>
+                        <span className="text-slate-300">npx akash --spec</span>
+                        <span className="text-slate-600 font-bold">|</span>
+                        <AnimatePresence mode="wait">
+                          <motion.span 
+                            key={typedWord}
+                            initial={{ opacity: 0, y: 6 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -6 }}
+                            transition={{ duration: 0.2 }}
+                            className="text-purple-400 font-bold"
+                          >
+                            {typedWord}
+                          </motion.span>
+                        </AnimatePresence>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Subheading detail summary */}
+                  <motion.p 
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.8 }}
+                    className="text-slate-400 font-sans text-sm md:text-base max-w-xl leading-relaxed font-medium"
+                  >
+                    I build premium web applications, linking Django REST API backends, real-time Firestore database architectures, and highly interactive React frontends into seamless digital experiences.
+                  </motion.p>
+
+                  {/* CTAs Buttons container */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.8 }}
+                    className="flex flex-wrap gap-4 pt-4"
+                  >
+                    <button 
+                      onClick={() => scrollToSection('projects')}
+                      className="px-6 py-3.5 bg-blue-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest shadow-xl shadow-blue-600/30 hover:scale-105 active:scale-[0.98] transition-transform flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Explore Projects</span>
+                      <Eye className="w-4 h-4" />
+                    </button>
+
+                    <a 
+                      href={resumePdf}
+                      download="Akash_Khadanga_Resume.pdf"
+                      className="px-6 py-3.5 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-xl font-bold text-xs uppercase tracking-widest backdrop-blur-xl hover:scale-105 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Download Resume</span>
+                      <Download className="w-4 h-4" />
+                    </a>
+
+                    <button 
+                      onClick={() => scrollToSection('contact')}
+                      className="px-6 py-3.5 bg-transparent border border-white/5 hover:border-white/10 text-slate-400 hover:text-white rounded-xl font-bold text-xs uppercase tracking-widest transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <span>Contact Me</span>
+                      <Mail className="w-4 h-4" />
+                    </button>
                   </motion.div>
                 </div>
 
-                {/* Subheading detail summary */}
-                <motion.p 
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className="text-slate-400 font-sans text-xs md:text-sm max-w-2xl leading-relaxed text-left"
-                >
-                  Leveraging Django API servers, real-time NoSQL Firestore clusters, and premium React interactive client workspaces to construct robust architectures with cinematic design qualities.
-                </motion.p>
-
-                {/* Magnetic CTAs Buttons container */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6, duration: 0.8 }}
-                  className="flex flex-col sm:flex-row gap-4 pt-4"
-                >
-                  <button 
-                    onClick={() => scrollToSection('projects')}
-                    className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold text-sm shadow-xl shadow-blue-600/30 hover:scale-105 active:scale-[0.98] transition-transform flex items-center justify-center gap-2 cursor-pointer"
+                {/* Right Side: Futuristic Glass Developer Status Panel */}
+                <div className="lg:col-span-5 hidden lg:block">
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    transition={{ delay: 0.4, duration: 0.8 }}
+                    className="bg-white/[0.02] border border-white/10 backdrop-blur-xl rounded-3xl p-6 relative overflow-hidden group hover:border-white/20 hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-300"
                   >
-                    <span>Explore Projects</span>
-                    <Eye className="w-4 h-4" />
-                  </button>
+                    {/* Glowing effect inside card */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-[40px] pointer-events-none transition-transform group-hover:scale-110" />
+                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500/10 rounded-full blur-[40px] pointer-events-none transition-transform group-hover:scale-110" />
 
-                  <button 
-                    onClick={() => scrollToSection('contact')}
-                    className="px-8 py-4 bg-white/5 border border-white/10 text-white rounded-2xl font-bold text-sm backdrop-blur-xl hover:bg-white/10 active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <span>Contact Me</span>
-                    <Mail className="w-4 h-4" />
-                  </button>
-                </motion.div>
+                    {/* Window Controls */}
+                    <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-4">
+                      <div className="flex gap-1.5">
+                        <span className="w-3 h-3 rounded-full bg-red-500/60" />
+                        <span className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                        <span className="w-3 h-3 rounded-full bg-green-500/60" />
+                      </div>
+                      <span className="text-[9px] font-mono text-slate-500 uppercase tracking-widest">spec_console_v2.0.1</span>
+                    </div>
+
+                    {/* Terminal content */}
+                    <div className="space-y-4 font-mono text-xs">
+                      
+                      <div className="space-y-1">
+                        <p className="text-[10px] text-slate-500">// DEV CORE DETAILS</p>
+                        <p className="text-slate-300">
+                          <span className="text-blue-400">const</span> engineer = <span className="text-purple-400">"Akash Khadanga"</span>;
+                        </p>
+                        <p className="text-slate-300">
+                          <span className="text-blue-400">const</span> location = <span className="text-purple-400">"Andhra Pradesh, India"</span>;
+                        </p>
+                      </div>
+
+                      <div className="space-y-1">
+                        <p className="text-[10px] text-slate-500">// STACK DIAGNOSTIC</p>
+                        <div className="grid grid-cols-2 gap-2 text-[11px] bg-slate-950/40 p-2.5 rounded-xl border border-white/5">
+                          <div>
+                            <span className="text-slate-500">API_LATENCY</span>
+                            <span className="block text-emerald-400 font-bold">&lt;35ms (Stable)</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-500">DB_STATUS</span>
+                            <span className="block text-blue-400 font-bold">Firestore / SQLite</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-500">FRONTEND</span>
+                            <span className="block text-purple-400 font-bold">React.js + TS</span>
+                          </div>
+                          <div>
+                            <span className="text-slate-500">BACKEND</span>
+                            <span className="block text-orange-400 font-bold">Django REST API</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <p className="text-[10px] text-slate-500">// REAL-TIME TELEMETRY</p>
+                        <div className="space-y-1.5 bg-slate-950/40 p-2.5 rounded-xl border border-white/5 text-[11px]">
+                          <div className="flex justify-between">
+                            <span className="text-slate-400">Problem Solving (DSA)</span>
+                            <span className="text-white font-bold">800+ Solved</span>
+                          </div>
+                          <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                            <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full" style={{ width: '92%' }} />
+                          </div>
+                          <div className="flex justify-between pt-1.5">
+                            <span className="text-slate-400">Real-Time Sync Systems</span>
+                            <span className="text-white font-bold">98% Efficient</span>
+                          </div>
+                          <div className="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                            <div className="bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full" style={{ width: '85%' }} />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Compilation line animation simulated */}
+                      <div className="flex items-center gap-2 text-[10px] text-slate-400 pt-2 border-t border-white/5">
+                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />
+                        <span>System status check complete.</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+
               </div>
 
               {/* Animated grid counters box in footer of hero */}
