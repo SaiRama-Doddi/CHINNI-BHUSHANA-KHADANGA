@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
 
 // Resolve paths safely in both ESM and CJS environments
 const resolvedFilename = typeof __filename !== 'undefined' ? __filename : fileURLToPath(import.meta.url);
@@ -224,6 +225,64 @@ async function startServer() {
     } catch (err: any) {
       console.error('Error on Gemini proxy call:', err);
       res.status(500).json({ error: err.message || 'An internal Server Error occurred' });
+    }
+  });
+
+  app.post('/api/contact', async (req, res) => {
+    try {
+      const { name, email, subject, message } = req.body;
+      if (!name || !email || !message) {
+        res.status(400).json({ error: 'Name, email, and message are required fields' });
+        return;
+      }
+
+      const smtpHost = process.env.SMTP_HOST;
+      const smtpPort = process.env.SMTP_PORT;
+      const smtpUser = process.env.SMTP_USER;
+      const smtpPass = process.env.SMTP_PASS;
+
+      if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
+        console.warn('⚠️ SMTP environment variables are not fully configured. Email was not sent.');
+        res.status(503).json({ 
+          error: 'Email service is not configured on the server. Please set SMTP_HOST, SMTP_PORT, SMTP_USER, and SMTP_PASS environment variables.' 
+        });
+        return;
+      }
+
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: parseInt(smtpPort, 10),
+        secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports (e.g. 587)
+        auth: {
+          user: smtpUser,
+          pass: smtpPass,
+        },
+      });
+
+      const mailOptions = {
+        from: `"${name}" <${smtpUser}>`, // sender address
+        replyTo: email, // reply-to address
+        to: 'akashkhadaanga123@gmail.com', // list of receivers
+        subject: `Portfolio Contact: ${subject || 'No Subject'}`, // Subject line
+        text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`, // plain text body
+        html: `
+          <div style="font-family: sans-serif; padding: 20px; color: #1e293b; background-color: #f8fafc; border-radius: 8px;">
+            <h2 style="color: #2563eb; margin-top: 0;">New Portfolio Message Received</h2>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+            <p><strong>Subject:</strong> ${subject || 'N/A'}</p>
+            <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
+            <p style="white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${message}</p>
+          </div>
+        `,
+      };
+
+      await transporter.sendMail(mailOptions);
+      console.log(`✉️ Email from ${email} sent successfully to akashkhadaanga123@gmail.com`);
+      res.json({ success: true, message: 'Message sent successfully!' });
+    } catch (err: any) {
+      console.error('Error sending email:', err);
+      res.status(500).json({ error: err.message || 'An error occurred while sending the email' });
     }
   });
 

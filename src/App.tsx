@@ -27,6 +27,7 @@ export default function App() {
   const [formState, setFormState] = useState({ name: '', email: '', subject: '', message: '' });
   const [formSuccess, setFormSuccess] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   const [contactTab, setContactTab] = useState<'briefing' | 'ai'>('briefing');
 
   // Rotating words for typing animation
@@ -42,17 +43,36 @@ export default function App() {
   }, []);
 
   // Form submission handler
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formState.name || !formState.email || !formState.message) return;
     
     setFormLoading(true);
-    // Simulate premium visual load feedback
-    setTimeout(() => {
-      setFormLoading(false);
+    setFormError(null);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Server transmission failed');
+      }
+
       setFormSuccess(true);
       setFormState({ name: '', email: '', subject: '', message: '' });
-    }, 1500);
+    } catch (err: any) {
+      console.error('Error submitting form:', err);
+      setFormError(err.message || 'A network error occurred. Please try again.');
+    } finally {
+      setFormLoading(false);
+    }
   };
 
   const projects: Project[] = [
@@ -747,6 +767,12 @@ export default function App() {
                             </div>
                           </div>
 
+                          {formError && (
+                            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-3 text-xs text-red-400 font-mono text-center relative z-20">
+                              ⚠️ {formError}
+                            </div>
+                          )}
+
                           <button 
                             type="submit"
                             disabled={formLoading}
@@ -782,7 +808,10 @@ export default function App() {
                             </p>
                           </div>
                           <button 
-                            onClick={() => setFormSuccess(false)}
+                            onClick={() => {
+                              setFormSuccess(false);
+                              setFormError(null);
+                            }}
                             className="px-5 py-2.5 bg-white/5 border border-white/10 text-xs text-slate-300 hover:text-white rounded-lg transition-colors cursor-pointer animate-pulse"
                           >
                             Send Another Transmission
